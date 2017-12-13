@@ -1,6 +1,6 @@
 # kobo_notify_project
 「ものつくり工房開けました」をLINEグループに自動通知するシステムを考案中。
-できる限り単純な仕組みかつ安価で年内に実現予定。  
+できる限り単純な仕組みで年内に実現予定。  
   
 ## LINE notifyの使い方  
 1. オンラインサービスの「LINE notify」に自分のLineIDでログインしてLine notifyのアクセストークンを発行しておく。  
@@ -12,21 +12,11 @@
 以上の手順は<https://qiita.com/takeshi_ok_desu/items/576a8226ba6584864d95>を参照。
   
   
-## 現在やろうとしていること  
-raspberry pi3内に次のようなシェルスクリプトを作る。  
-```      
-#!/bin/sh  
+## 今考えている方法  
+raspberry pi3内に、光センサの値を読み取って照明が切り替わったときだけメッセージをLINEに飛ばすプログラムを作り稼働させ続ける。  
   
-sleep(10)  
-  
-curl -X POST -H 'Authorization: Bearer アクセストークン' -F 'message=MONOTSUKURI studio has been opened.' https://notify-api.line.me  
-  
-sudo shutdown -h now  
-```  
-このシェルスクリプトを/etc/profile.d/に置いておくと、raspberry pi3起動時に自動で実行される(テスト済)。  
-あとは「工房内に鍵が置かれたとき」や「電灯がついたとき」などの条件でraspberry piに給電されるような仕組みを作ればうまくいくはず。  
-  
-  
-## 問題点  
-- 給電する仕組みを具体的にどうするか考えていない。できるだけボタンスイッチなどの意図的な動作が必要な仕組みは避けたい。  
-- やることとコストが見合ってない。もっと安価なもの(ESP32-DerKitCなど)で実現するか、raspberry piを使う価値があるだけの機能を追加したい。  
+## 備考  
+- プログラムのコンパイルには次のようなオプションをつける  
+` g++ -std=c++0x ファイル名.cpp -lwiringPi `  
+- プログラムの稼働中はraspberry piに給電し続ける必要アリ(工房から帰る前〜工房に来るまで)。 
+- 光センサの読み取りに問題が多発するなら、物理的なスイッチを使うのもいいかも。
