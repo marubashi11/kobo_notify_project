@@ -1,5 +1,5 @@
 #include <iostream>
-#include <cstdlib> //system´Ø¿ôÍÑ
+#include <cstdlib> //systemé–¢æ•°ç”¨
 #include <wiringPi.h>
 
 constexpr int get_pin = 17;
@@ -8,19 +8,19 @@ int main(){
   if (wiringPiSetupGpio()) return 1;
 
   pinMode(get_pin, INPUT);
-  auto last = digitalRead(get_pin); //Á°²óÃÍ¤ò¼è¤ë
+  auto last = digitalRead(get_pin);
 
   while (true) {
     auto get = digitalRead(get_pin);
     sleep(1);
 
-    if (get == last) continue; //ÃÍ¤¬ÊÑ¤ï¤Ã¤Æ¤¤¤Ê¤¤¤Ê¤é¥ë¡¼¥×ÀèÆ¬¤Ø
-
-    //ÃÍ¤¬ÀÚ¤êÂØ¤ï¤Ã¤¿¤Ê¤é¡¢¤½¤Î»ş¤ÎÁ°²óÃÍ¤Ë¤è¤Ã¤ÆÊ¬´ô
+    if (get == last) continue;
+    //å‰å›å€¤ã¨å¤‰ã‚ã£ã¦ãªã„ãªã‚‰ãƒ«ãƒ¼ãƒ—å…ˆé ­ã¸ã€å¤‰ã‚ã£ãŸãªã‚‰ãã®æ™‚ã®å‰å›å€¤ã§åˆ†å²
+    //ãƒ—ãƒ«ã‚¢ãƒƒãƒ—æŠµæŠ—ã‚’ä½¿ã£ã¦ã„ã‚‹ãŸã‚OPENã¨CLOSEãŒé€†è»¢ã—ã¦ã„ã‚‹
     if (last == LOW) {
-      std::system("curl -X POST -H 'Authorization: Bearer ¥¢¥¯¥»¥¹¥È¡¼¥¯¥ó' -F 'message=MONOTSUKURI workshop has been OPENED.' https://notify-api.line.me/api/notify");
-    } else {
-      std::system("curl -X POST -H 'Authorization: Bearer ¥¢¥¯¥»¥¹¥È¡¼¥¯¥ó' -F 'message=MONOTSUKURI workshop has been CLOSED.' https://notify-api.line.me/api/notify");
+      std::system("curl -X POST -H 'Authorization: Bearer **************** 'message=MONOTSUKURI workshop has been CLOSED.' https://notify-api.line.me/api/notify");
+    } else {   
+      std::system("curl -X POST -H 'Authorization: Bearer **************** 'message=MONOTSUKURI workshop has been OPENED.' https://notify-api.line.me/api/notify");
     }
 
     last = get;
